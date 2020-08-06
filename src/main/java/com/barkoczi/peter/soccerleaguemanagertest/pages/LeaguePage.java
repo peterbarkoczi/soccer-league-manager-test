@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.stereotype.Service;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Service
 public class LeaguePage extends BasePage {
 
@@ -18,6 +21,10 @@ public class LeaguePage extends BasePage {
         super(driver);
     }
 
+    @FindBy(id = "locationHeaderTitle")
+    private WebElement locationHeaderTitle;
 
-
+    public boolean locationHeaderTitleIsAppeared() {
+        return wait.until(ExpectedConditions.visibilityOf(locationHeaderTitle)).isDisplayed();
+    }
 }
