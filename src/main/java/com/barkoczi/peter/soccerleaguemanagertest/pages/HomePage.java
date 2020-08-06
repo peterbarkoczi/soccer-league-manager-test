@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,11 +67,13 @@ public class HomePage extends BasePage {
         return locationNames;
     }
 
-    public String createNewLocation(String locationName) {
-        clickOnAddLocationButton();
-        addLocationModal.fillAddNameField(locationName);
-        addLocationModal.clickOnSubmitButton();
-        return locationName;
+    public void clickOnLocation(String locationName) {
+        List<WebElement> locations = wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(By.className("locationLink"))));
+        for (WebElement location : locations) {
+            if (location.getText().equals(locationName)) {
+                location.click();
+            }
+        }
     }
 
 }
