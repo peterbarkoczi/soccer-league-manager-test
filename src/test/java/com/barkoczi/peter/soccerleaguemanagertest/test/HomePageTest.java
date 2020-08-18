@@ -2,8 +2,8 @@ package com.barkoczi.peter.soccerleaguemanagertest.test;
 
 import com.barkoczi.peter.soccerleaguemanagertest.pages.AddLocationModal;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.HomePage;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
