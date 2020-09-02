@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Data
@@ -36,5 +37,9 @@ public abstract class BasePage {
 
     protected void fillInputField(WebElement inputField, String input) {
         inputField.sendKeys(input);
+    }
+
+    protected boolean isDisplayed(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
     }
 }
