@@ -65,12 +65,35 @@ public class HomePageTest extends BaseTest {
     public void addNewLocationTest() {
         addLocationModal = new AddLocationModal(driver);
         String testInput = "Test Location";
-        homePage.clickOnAddLocationButton();
-        addLocationModal.fillAddNameField(testInput);
-        addLocationModal.clickOnSubmitButton();
+        addNewLocation(testInput);
         List<String> newLocations = homePage.getNewLocationNames();
         System.out.println("NewLocations: " + newLocations);
         assertTrue(newLocations.contains(testInput));
+        deleteLocation(testInput);
+    }
+
+    @Test
+    public void deleteLocationTest() {
+        addLocationModal = new AddLocationModal(driver);
+        String testInput = "Test Location";
+        addNewLocation(testInput);
+        List<String> locationsWithTestLocation = homePage.getNewLocationNames();
+        deleteLocation(testInput);
+        List<String> locationsWithoutTestLocation = homePage.getNewLocationNames();
+        assertNotEquals(
+                locationsWithTestLocation.contains(testInput),
+                locationsWithoutTestLocation.contains(testInput));
+    }
+
+    private void addNewLocation(String newLocationName) {
+        homePage.clickOnAddLocationButton();
+        addLocationModal.fillAddNameField(newLocationName);
+        addLocationModal.clickOnSubmitButton();
+    }
+
+    private void deleteLocation(String locationName) {
+        homePage.clickOnDeleteButton(locationName);
+        homePage.clickOnConfirmButton();
     }
 
 }
