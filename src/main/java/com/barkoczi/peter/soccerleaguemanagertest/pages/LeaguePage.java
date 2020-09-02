@@ -24,7 +24,28 @@ public class LeaguePage extends BasePage {
     @FindBy(id = "locationHeaderTitle")
     private WebElement locationHeaderTitle;
 
+    @FindBy(id = "leagueTitle")
+    private WebElement leagueTitle;
+
+    @FindBy(id = "addLeagueButton")
+    private WebElement addLeagueButton;
+
+    @FindBy(id = "leaguesList")
+    private WebElement leaguesList;
+
     public boolean locationHeaderTitleIsAppeared() {
-        return wait.until(ExpectedConditions.visibilityOf(locationHeaderTitle)).isDisplayed();
+        return isDisplayed(locationHeaderTitle);
+    }
+
+    public boolean isLeagueTitleAppeared() {
+        return isDisplayed(leagueTitle);
+    }
+
+    public boolean isAddLeagueButtonAppeared() {
+        return isDisplayed(addLeagueButton);
+    }
+
+    public boolean isLeaguesListAppeared() {
+        return isDisplayed(leaguesList);
     }
 }

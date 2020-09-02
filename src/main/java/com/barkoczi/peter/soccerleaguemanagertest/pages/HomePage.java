@@ -68,7 +68,8 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnLocation(String locationName) {
-        List<WebElement> locations = wait.until(ExpectedConditions.visibilityOfAllElements(driver.findElements(By.className("locationLink"))));
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("locationLink")));
+        List<WebElement> locations = driver.findElements(By.className("locationLink"));
         for (WebElement location : locations) {
             if (location.getText().equals(locationName)) {
                 location.click();
