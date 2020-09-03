@@ -8,11 +8,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -86,4 +91,33 @@ public class TeamPageTest extends BaseTest {
         addNewTeam(teamName);
         assertTrue(teamPage.getTeams().stream().anyMatch(team -> team.equals(teamName)));
     }
+
+    @Test
+    public void addMultipleTeams() {
+        goToLocationTeamPage(testLocationName);
+        List<String> newTeams = Arrays.asList("Test team 1", "Test team 2", "Test team 3", "Test team 4", "Test team 5");
+        for (String newTeam : newTeams) {
+            addNewTeam(newTeam);
+        }
+        assertEquals(newTeams, teamPage.getTeams());
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideTeams")
+    public void addDifferentTeamLists(List<String> teamList) {
+        goToLocationTeamPage(testLocationName);
+        for (String team : teamList) {
+            addNewTeam(team);
+        }
+        assertEquals(teamList, teamPage.getTeams());
+    }
+
+    private static Stream<Arguments> provideTeams() {
+        return Stream.of(
+                Arguments.of(Arrays.asList("Test team 1", "Test team 2", "Test team 3")),
+                Arguments.of(Arrays.asList("Test team 4", "Test team 5", "Test team 6")),
+                Arguments.of(Arrays.asList("Test team 7", "Test team 8", "Test team 9"))
+        );
+    }
+
 }
