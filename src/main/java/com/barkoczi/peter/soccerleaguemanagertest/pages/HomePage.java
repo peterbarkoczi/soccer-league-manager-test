@@ -50,6 +50,9 @@ public class HomePage extends BasePage {
     @FindBy(className = "locationLink")
     private List<WebElement> locationLinks;
 
+    @FindBy(className = "deleteLocationButton")
+    private List<WebElement> deleteLocationButtons;
+
     public void navigateToHomePage() {
         navigateTo("");
     }
@@ -59,6 +62,7 @@ public class HomePage extends BasePage {
     }
 
     public List<String> getNewLocationNames() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("locationLink")));
         List<WebElement> names = driver.findElements(By.className("locationLink"));
         List<String> locationNames = new ArrayList<>();
         for (WebElement name : names) {
@@ -75,6 +79,20 @@ public class HomePage extends BasePage {
                 location.click();
             }
         }
+    }
+
+    public void clickOnDeleteButton(String locationName) {
+        wait.until(ExpectedConditions.elementToBeClickable(By.className("deleteLocationButton")));
+        List<WebElement> deleteButtons = driver.findElements(By.className("deleteLocationButton"));
+        for (WebElement deleteButton : deleteButtons) {
+            if (deleteButton.getAttribute("id").contains(locationName)) {
+                deleteButton.click();
+            }
+        }
+    }
+
+    public void clickOnConfirmButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("confirmDeleteButton"))).click();
     }
 
 }

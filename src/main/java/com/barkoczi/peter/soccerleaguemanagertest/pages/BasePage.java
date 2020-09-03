@@ -40,6 +40,7 @@ public abstract class BasePage {
     }
 
     protected boolean isDisplayed(WebElement element) {
-        return wait.until(ExpectedConditions.visibilityOf(element)).isDisplayed();
+//        wait.until(ExpectedConditions.visibilityOf(element));
+        return element.isDisplayed();
     }
 }

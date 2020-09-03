@@ -14,13 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class HomePageTest extends BaseTest {
 
-    private AddLocationModal addLocationModal;
-
     @BeforeEach
     public void setHomePage() {
         homePage = new HomePage(this.driver);
         homePage.navigateToHomePage();
-
     }
 
     @Test
@@ -63,14 +60,22 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void addNewLocationTest() {
-        addLocationModal = new AddLocationModal(driver);
-        String testInput = "Test Location";
-        homePage.clickOnAddLocationButton();
-        addLocationModal.fillAddNameField(testInput);
-        addLocationModal.clickOnSubmitButton();
+        addNewLocation(testLocationName, driver);
         List<String> newLocations = homePage.getNewLocationNames();
         System.out.println("NewLocations: " + newLocations);
-        assertTrue(newLocations.contains(testInput));
+        assertTrue(newLocations.contains(testLocationName));
+        deleteLocation(testLocationName);
+    }
+
+    @Test
+    public void deleteLocationTest() {
+        addNewLocation(testLocationName, driver);
+        List<String> locationsWithTestLocation = homePage.getNewLocationNames();
+        deleteLocation(testLocationName);
+        List<String> locationsWithoutTestLocation = homePage.getNewLocationNames();
+        assertNotEquals(
+                locationsWithTestLocation.contains(testLocationName),
+                locationsWithoutTestLocation.contains(testLocationName));
     }
 
 }

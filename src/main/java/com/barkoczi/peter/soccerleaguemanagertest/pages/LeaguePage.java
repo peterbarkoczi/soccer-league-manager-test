@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,7 +35,8 @@ public class LeaguePage extends BasePage {
     private WebElement leaguesList;
 
     public boolean locationHeaderTitleIsAppeared() {
-        return isDisplayed(locationHeaderTitle);
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("locationHeaderTitle"))));
+        return isDisplayed(driver.findElement(By.id("locationHeaderTitle")));
     }
 
     public boolean isLeagueTitleAppeared() {
@@ -46,6 +48,7 @@ public class LeaguePage extends BasePage {
     }
 
     public boolean isLeaguesListAppeared() {
-        return isDisplayed(leaguesList);
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("leaguesList"))));
+        return isDisplayed(driver.findElement(By.id("leaguesList")));
     }
 }
