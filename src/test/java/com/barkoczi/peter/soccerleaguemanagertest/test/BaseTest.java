@@ -1,9 +1,6 @@
 package com.barkoczi.peter.soccerleaguemanagertest.test;
 
-import com.barkoczi.peter.soccerleaguemanagertest.pages.AddLocationModal;
-import com.barkoczi.peter.soccerleaguemanagertest.pages.Header;
-import com.barkoczi.peter.soccerleaguemanagertest.pages.HomePage;
-import com.barkoczi.peter.soccerleaguemanagertest.pages.LeaguePage;
+import com.barkoczi.peter.soccerleaguemanagertest.pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +13,7 @@ public abstract class BaseTest {
     protected WebDriver driver;
     protected HomePage homePage;
     protected LeaguePage leaguePage;
+    protected TeamPage teamPage;
     protected Header header;
     protected AddLocationModal addLocationModal;
 
