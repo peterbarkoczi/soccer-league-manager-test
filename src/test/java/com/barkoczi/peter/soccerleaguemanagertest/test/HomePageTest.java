@@ -14,13 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class HomePageTest extends BaseTest {
 
-    private AddLocationModal addLocationModal;
-
     @BeforeEach
     public void setHomePage() {
         homePage = new HomePage(this.driver);
         homePage.navigateToHomePage();
-
     }
 
     @Test
@@ -63,37 +60,22 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void addNewLocationTest() {
-        addLocationModal = new AddLocationModal(driver);
-        String testInput = "Test Location";
-        addNewLocation(testInput);
+        addNewLocation(testLocationName, driver);
         List<String> newLocations = homePage.getNewLocationNames();
         System.out.println("NewLocations: " + newLocations);
-        assertTrue(newLocations.contains(testInput));
-        deleteLocation(testInput);
+        assertTrue(newLocations.contains(testLocationName));
+        deleteLocation(testLocationName);
     }
 
     @Test
     public void deleteLocationTest() {
-        addLocationModal = new AddLocationModal(driver);
-        String testInput = "Test Location";
-        addNewLocation(testInput);
+        addNewLocation(testLocationName, driver);
         List<String> locationsWithTestLocation = homePage.getNewLocationNames();
-        deleteLocation(testInput);
+        deleteLocation(testLocationName);
         List<String> locationsWithoutTestLocation = homePage.getNewLocationNames();
         assertNotEquals(
-                locationsWithTestLocation.contains(testInput),
-                locationsWithoutTestLocation.contains(testInput));
-    }
-
-    private void addNewLocation(String newLocationName) {
-        homePage.clickOnAddLocationButton();
-        addLocationModal.fillAddNameField(newLocationName);
-        addLocationModal.clickOnSubmitButton();
-    }
-
-    private void deleteLocation(String locationName) {
-        homePage.clickOnDeleteButton(locationName);
-        homePage.clickOnConfirmButton();
+                locationsWithTestLocation.contains(testLocationName),
+                locationsWithoutTestLocation.contains(testLocationName));
     }
 
 }
