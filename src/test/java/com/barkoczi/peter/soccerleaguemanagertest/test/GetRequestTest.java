@@ -39,8 +39,8 @@ public class GetRequestTest {
     public void getTeamsEndPointTest() {
         RestAssured.baseURI = "http://localhost:8080/teams";
         RequestSpecification httpRequest = given();
-        Response response = httpRequest.request(Method.GET, "?id=1");
-//        String responseBody = response.body().asString();
+        Response response = httpRequest.request(Method.GET, "?id=328");
+        System.out.println(response.asString());
         int statusCode = response.getStatusCode();
         assertTrue(String.valueOf(statusCode).startsWith("2"));
     }
@@ -48,14 +48,21 @@ public class GetRequestTest {
     @Test
     @DisplayName("Get cup's qualifiers endpoint test")
     public void getCupQualifiersTest() {
-        int statusCode = given().when().get("http://localhost:8080/match/get_qualifiers?cupId=101&matchType=q").statusCode();
+        int statusCode = given().when().get("http://localhost:8080/match/get_matches?cupId=839&matchType=qualifier").statusCode();
         assertTrue(String.valueOf(statusCode).startsWith("2"));
     }
 
     @Test
     @DisplayName("Get cup's semi finals endpoint test")
     public void getCupSemiFinalsTest() {
-        int statusCode = given().when().get("http://localhost:8080/match/get_semifinals?cupId=101&matchType=sf").statusCode();
+        int statusCode = given().when().get("http://localhost:8080/match/get_matches?cupId=839&matchType=semiFinal").statusCode();
+        assertTrue(String.valueOf(statusCode).startsWith("2"));
+    }
+
+    @Test
+    @DisplayName("Get cup's semi finals endpoint test")
+    public void getCupFinalsTest() {
+        int statusCode = given().when().get("http://localhost:8080/match/get_matches?cupId=839&matchType=final").statusCode();
         assertTrue(String.valueOf(statusCode).startsWith("2"));
     }
 

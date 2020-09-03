@@ -1,8 +1,10 @@
 package com.barkoczi.peter.soccerleaguemanagertest.test;
 
+import com.barkoczi.peter.soccerleaguemanagertest.pages.AddLeagueModal;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.Header;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.HomePage;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.LeaguePage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,51 +23,74 @@ public class LeaguePageTest extends BaseTest {
         homePage.navigateToHomePage();
     }
 
+    @AfterEach
+    public void deleteCreatedLocations() {
+        deleteLocation(testLocationName);
+    }
+
+    private void goToLeaguePage(String locationName) {
+        addNewLocation(locationName, driver);
+        homePage.clickOnLocation(locationName);
+    }
+
+    private void addNewLeague(String leagueName) {
+        leaguePage.clickOnAddLeagueButton();
+        AddLeagueModal addLeagueModal = new AddLeagueModal(driver);
+        addLeagueModal.fillAddNameInputField(leagueName);
+        addLeagueModal.clickOnSubmitButton();
+    }
+
     @Test
     @DisplayName("Header title is appeared")
     public void headerTitleIsAppearedTest() {
-        addNewLocation(testLocationName, driver);
-        homePage.clickOnLocation(testLocationName);
+        goToLeaguePage(testLocationName);
         assertTrue(leaguePage.locationHeaderTitleIsAppeared());
-        deleteLocation(testLocationName);
     }
 
     @Test
     @DisplayName("Nav Menu is appeared")
     public void navMenuIsAppeared() {
-        addNewLocation(testLocationName, driver);
-        homePage.clickOnLocation(testLocationName);
+        goToLeaguePage(testLocationName);
         assertTrue(header.headerNavMenuIsAppeared());
-        deleteLocation(testLocationName);
     }
 
     @Test
     @DisplayName("Is 'Bajnokság' appeared")
     public void checkLeagueTitle() {
-        addNewLocation(testLocationName, driver);
-        homePage.clickOnLocation(testLocationName);
+        goToLeaguePage(testLocationName);
         header.clickOnLeaguesButton();
         assertTrue(leaguePage.isLeagueTitleAppeared());
-        deleteLocation(testLocationName);
     }
 
     @Test
     @DisplayName("Is Add League button appeared")
     public void checkAddLeagueButton() {
-        addNewLocation(testLocationName, driver);
-        homePage.clickOnLocation(testLocationName);
+        goToLeaguePage(testLocationName);
         header.clickOnLeaguesButton();
         assertTrue(leaguePage.isAddLeagueButtonAppeared());
-        deleteLocation(testLocationName);
+    }
+
+    @Test
+    public void checkAddLeagueModal() {
+        goToLeaguePage(testLocationName);
+        leaguePage.clickOnAddLeagueButton();
+        AddLeagueModal addLeagueModal = new AddLeagueModal(driver);
+        assertTrue(addLeagueModal.isModalAppeared());
+    }
+
+    @Test
+    public void addNewLeague() {
+        String leagueName = "Test League";
+        goToLeaguePage(testLocationName);
+        addNewLeague(leagueName);
+        assertTrue(leaguePage.getNewLeaguesNames().stream().anyMatch(name -> name.equals(leagueName)));
     }
 
     @Test
     @DisplayName("Is Leagues list appeared")
     public void checkLeaguesList() {
-        addNewLocation(testLocationName, driver);
-        homePage.clickOnLocation(testLocationName);
-        header.clickOnLeaguesButton();
+        goToLeaguePage(testLocationName);
+        addNewLeague("Test League");
         assertTrue(leaguePage.isLeaguesListAppeared());
-        deleteLocation(testLocationName);
     }
 }

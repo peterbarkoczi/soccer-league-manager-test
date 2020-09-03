@@ -11,6 +11,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
@@ -51,4 +54,19 @@ public class LeaguePage extends BasePage {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("leaguesList"))));
         return isDisplayed(driver.findElement(By.id("leaguesList")));
     }
+
+    public void clickOnAddLeagueButton() {
+        clickOn(addLeagueButton);
+    }
+
+    public List<String> getNewLeaguesNames() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"leaguesList\"]/a")));
+        List<WebElement> names = driver.findElements(By.xpath("//*[@id=\"leaguesList\"]/a/div"));
+        List<String> leagueNames = new ArrayList<>();
+        for (WebElement name : names) {
+            leagueNames.add(name.getText());
+        }
+        return leagueNames;
+    }
+
 }
