@@ -7,6 +7,8 @@ import com.barkoczi.peter.soccerleaguemanagertest.pages.TeamPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -74,10 +76,14 @@ public class TeamPageTest extends BaseTest {
         String teamName = "Test team";
         goToLocationTeamPage(testLocationName);
         addNewTeam(teamName);
-        boolean isContains = teamPage.getTeams().stream().anyMatch(team -> team.equals(teamName));
-        assertTrue(isContains);
+        assertTrue(teamPage.getTeams().stream().anyMatch(team -> team.equals(teamName)));
     }
 
-    
-
+    @ParameterizedTest
+    @ValueSource(strings = {"Test team 1", "Test team 2", "Test team 3", "Test team 4", "Test team 5"})
+    public void addDifferentTeams(String teamName) {
+        goToLocationTeamPage(testLocationName);
+        addNewTeam(teamName);
+        assertTrue(teamPage.getTeams().stream().anyMatch(team -> team.equals(teamName)));
+    }
 }
