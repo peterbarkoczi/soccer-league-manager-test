@@ -1,5 +1,6 @@
 package com.barkoczi.peter.soccerleaguemanagertest.test;
 
+import com.barkoczi.peter.soccerleaguemanagertest.pages.AddLocationModal;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.Header;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.HomePage;
 import com.barkoczi.peter.soccerleaguemanagertest.pages.LeaguePage;
@@ -16,6 +17,9 @@ public abstract class BaseTest {
     protected HomePage homePage;
     protected LeaguePage leaguePage;
     protected Header header;
+    protected AddLocationModal addLocationModal;
+
+    protected final String testLocationName = "New test location";
 
     @BeforeAll
     public static void setUpDriver() {
@@ -32,6 +36,19 @@ public abstract class BaseTest {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    protected void addNewLocation(String newLocationName, WebDriver driver) {
+        addLocationModal = new AddLocationModal(driver);
+        homePage.clickOnAddLocationButton();
+        addLocationModal.fillAddNameField(newLocationName);
+        addLocationModal.clickOnSubmitButton();
+    }
+
+    protected void deleteLocation(String locationName) {
+        homePage.navigateToHomePage();
+        homePage.clickOnDeleteButton(locationName);
+        homePage.clickOnConfirmButton();
     }
 
 }
