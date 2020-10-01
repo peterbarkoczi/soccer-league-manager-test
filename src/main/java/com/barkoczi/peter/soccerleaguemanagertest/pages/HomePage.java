@@ -82,17 +82,12 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnDeleteButton(String locationName) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.className("deleteLocationButton")));
-        List<WebElement> deleteButtons = driver.findElements(By.className("deleteLocationButton"));
-        for (WebElement deleteButton : deleteButtons) {
-            if (deleteButton.getAttribute("id").contains(locationName)) {
-                deleteButton.click();
-            }
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("delete-" + locationName))).click();
     }
 
     public void clickOnConfirmButton() {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("confirmDeleteButton"))).click();
+        navigateToHomePage();
     }
 
 }
