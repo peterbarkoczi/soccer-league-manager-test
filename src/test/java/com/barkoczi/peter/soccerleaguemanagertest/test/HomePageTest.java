@@ -5,9 +5,14 @@ import com.barkoczi.peter.soccerleaguemanagertest.pages.HomePage;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,9 +67,17 @@ public class HomePageTest extends BaseTest {
     public void addNewLocationTest() {
         addNewLocation(testLocationName, driver);
         List<String> newLocations = homePage.getNewLocationNames();
-        System.out.println("NewLocations: " + newLocations);
         assertTrue(newLocations.contains(testLocationName));
         deleteLocation(testLocationName);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideLocations")
+    public void addMultipleNewLocation(List<String> locationNames) {
+        locationNames.forEach(location -> addNewLocation(location, driver));
+        List<String> newLocations = homePage.getNewLocationNames();
+        assertTrue(newLocations.containsAll(locationNames));
+        locationNames.forEach(this::deleteLocation);
     }
 
     @Test
@@ -76,6 +89,12 @@ public class HomePageTest extends BaseTest {
         assertNotEquals(
                 locationsWithTestLocation.contains(testLocationName),
                 locationsWithoutTestLocation.contains(testLocationName));
+    }
+
+    private static Stream<Arguments> provideLocations() {
+        return Stream.of(
+                Arguments.of(Arrays.asList("Test Location 1", "Test Location 2", "Test Location 3", "Test Location 4", "Test Location 5"))
+        );
     }
 
 }
