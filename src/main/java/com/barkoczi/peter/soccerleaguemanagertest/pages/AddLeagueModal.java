@@ -26,6 +26,18 @@ public class AddLeagueModal extends BasePage {
     @FindBy(id = "addLeagueName")
     private WebElement addNameInputField;
 
+    @FindBy(id = "addLeagueDate")
+    private WebElement addDateInputField;
+
+    @FindBy(id = "addLeagueStartTime")
+    private WebElement addStartTimeInputField;
+
+    @FindBy(id = "addLeagueMatchTime")
+    private WebElement addMatchTimeInputField;
+
+    @FindBy(xpath = "//*[@id=\"addNewLeague\"]/div/div[2]/form/div[5]/div[1]/input")
+    private WebElement firstCheckBox;
+
     @FindBy(id = "addLeagueSubmit")
     private WebElement submitButton;
 
@@ -33,8 +45,32 @@ public class AddLeagueModal extends BasePage {
         return isDisplayed(addLeagueModal);
     }
 
-    public void fillAddNameInputField(String leagueName) {
+    public void fillInputFields(String leagueName) {
+        fillNameField(leagueName);
+        fillDateField();
+        fillStartTimeField();
+        fillMatchTimeField();
+        clickOnFirstCheckBox();
+    }
+
+    private void fillNameField(String leagueName) {
         fillInputField(addNameInputField, leagueName);
+    }
+
+    private void fillDateField() {
+        fillInputField(addDateInputField, "2020.10.03");
+    }
+
+    private void fillStartTimeField() {
+        fillInputField(addStartTimeInputField, "18:00");
+    }
+
+    private void fillMatchTimeField() {
+        fillInputField(addMatchTimeInputField, "20");
+    }
+
+    private void clickOnFirstCheckBox() {
+        clickOn(firstCheckBox);
     }
 
     public void clickOnSubmitButton() {

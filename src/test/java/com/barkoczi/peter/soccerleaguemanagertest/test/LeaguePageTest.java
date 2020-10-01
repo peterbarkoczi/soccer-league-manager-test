@@ -36,7 +36,7 @@ public class LeaguePageTest extends BaseTest {
     private void addNewLeague(String leagueName) {
         leaguePage.clickOnAddLeagueButton();
         AddLeagueModal addLeagueModal = new AddLeagueModal(driver);
-        addLeagueModal.fillAddNameInputField(leagueName);
+        addLeagueModal.fillInputFields(leagueName);
         addLeagueModal.clickOnSubmitButton();
     }
 
